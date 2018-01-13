@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java, shenzheng" />
+  <meta name="keywords" content="hbase," />
 
 
 
@@ -81,16 +81,18 @@
 
 
 
-<meta name="description" content="每天进步一点点">
-<meta property="og:type" content="website">
-<meta property="og:title" content="峰&#39;s Harbor">
-<meta property="og:url" content="https://xiaofeng613n.github.io/tags/aop/index.html">
+<meta name="description" content="环境linux:centos7java:1.8 SSH设置和密钥生成SSH设置需要在集群上执行不同的操作，如启动，停止和分布式守护shell操作。进行身份验证不同的Hadoop用户，需要一种用于Hadoop的用户提供的公钥/私钥对，并用不同的用户共享。以下的命令被用于生成使用SSH密钥值对。复制公钥从id_rsa.pub为authorized_keys，并提供所有者，读写权限到authorized">
+<meta name="keywords" content="hbase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HBase配置">
+<meta property="og:url" content="https://xiaofeng613n.github.io/2018/01/14/HBase配置/index.html">
 <meta property="og:site_name" content="峰&#39;s Harbor">
-<meta property="og:description" content="每天进步一点点">
+<meta property="og:description" content="环境linux:centos7java:1.8 SSH设置和密钥生成SSH设置需要在集群上执行不同的操作，如启动，停止和分布式守护shell操作。进行身份验证不同的Hadoop用户，需要一种用于Hadoop的用户提供的公钥/私钥对，并用不同的用户共享。以下的命令被用于生成使用SSH密钥值对。复制公钥从id_rsa.pub为authorized_keys，并提供所有者，读写权限到authorized">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-13T16:44:40.327Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="峰&#39;s Harbor">
-<meta name="twitter:description" content="每天进步一点点">
+<meta name="twitter:title" content="HBase配置">
+<meta name="twitter:description" content="环境linux:centos7java:1.8 SSH设置和密钥生成SSH设置需要在集群上执行不同的操作，如启动，停止和分布式守护shell操作。进行身份验证不同的Hadoop用户，需要一种用于Hadoop的用户提供的公钥/私钥对，并用不同的用户共享。以下的命令被用于生成使用SSH密钥值对。复制公钥从id_rsa.pub为authorized_keys，并提供所有者，读写权限到authorized">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://xiaofeng613n.github.io/tags/aop/"/>
+  <link rel="canonical" href="https://xiaofeng613n.github.io/2018/01/14/HBase配置/"/>
 
 
 
 
 
-  <title>标签: aop | 峰's Harbor</title>
+  <title>HBase配置 | 峰's Harbor</title>
   
 
 
@@ -145,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -293,138 +295,182 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>aop<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/01/14/HBase配置/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaofeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/note.github.io/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰's Harbor">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/note.github.io/2017/10/03/my-first-post - 副本 (2)/" itemprop="url">
-              
-                <span itemprop="name">my first post</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">HBase配置</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-03T15:31:18+08:00"
-              content="2017-10-03" >
-          10-03
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-14T00:32:20+08:00">
+                2018-01-14
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/note.github.io/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/note.github.io/2017/10/03/my-first-post - 副本 (3)/" itemprop="url">
-              
-                <span itemprop="name">my first post</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-03T15:31:18+08:00"
-              content="2017-10-03" >
-          10-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/note.github.io/2017/10/03/my-first-post - 副本/" itemprop="url">
-              
-                <span itemprop="name">my first post</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-03T15:31:18+08:00"
-              content="2017-10-03" >
-          10-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/note.github.io/2017/10/03/my-first-post/" itemprop="url">
-              
-                <span itemprop="name">my first post</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-03T15:31:18+08:00"
-              content="2017-10-03" >
-          10-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p><strong>环境</strong><br>linux:centos7<br>java:1.8</p>
+<p>SSH设置和密钥生成<br>SSH设置需要在集群上执行不同的操作，如启动，停止和分布式守护shell操作。进行身份验证不同的Hadoop用户，需要一种用于Hadoop的用户提供的公钥/私钥对，并用不同的用户共享。<br>以下的命令被用于生成使用SSH密钥值对。复制公钥从id_rsa.pub为authorized_keys，并提供所有者，读写权限到authorized_keys文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># ssh-keygen -t rsa</div><div class="line"># cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"># chmod 0600 ~/.ssh/</div><div class="line">//验证</div><div class="line"># ssh localhost</div></pre></td></tr></table></figure>
+<h5 id="伪分布式模式"><a href="#伪分布式模式" class="headerlink" title="伪分布式模式"></a>伪分布式模式</h5><h6 id="下载Hbase"><a href="#下载Hbase" class="headerlink" title="下载Hbase"></a>下载Hbase</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># wget http://mirrors.sonic.net/apache/hbase/1.4.0/hbase-1.4.0-bin.tar.gz</div><div class="line"># tar -zxvf hbase-1.4.0-bin.tar.gz</div></pre></td></tr></table></figure>
+<h6 id="配置-HBASE-HOME-conf-hbase-env-sh"><a href="#配置-HBASE-HOME-conf-hbase-env-sh" class="headerlink" title="配置 $HBASE_HOME/conf/hbase-env.sh"></a>配置 $HBASE_HOME/conf/hbase-env.sh</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/java/jdk1.8.0_144/</div><div class="line">export HBASE_MANAGES_ZK=true</div></pre></td></tr></table></figure>
+<h6 id="配置-HBASE-HOME-conf-hbase-site-xml（这里hbase-rootdir使用的是文件系统，非hdfs）"><a href="#配置-HBASE-HOME-conf-hbase-site-xml（这里hbase-rootdir使用的是文件系统，非hdfs）" class="headerlink" title="配置 $HBASE_HOME/conf/hbase-site.xml（这里hbase.rootdir使用的是文件系统，非hdfs）"></a>配置 $HBASE_HOME/conf/hbase-site.xml（这里hbase.rootdir使用的是文件系统，非hdfs）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/usr/local/soft/hbase-1.4.0/h-data&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.master.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16000&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.master.info.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16010&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.regionserver.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16201&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.regionserver.info.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16301&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;</div><div class="line">    &lt;value&gt;true&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
+<h6 id="启动与停止"><a href="#启动与停止" class="headerlink" title="启动与停止"></a>启动与停止</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># cd $HBASE_HOME/bin </div><div class="line"># sh start-hbase.sh</div><div class="line"># sh stop-hbase.sh</div><div class="line">// 启动后可以使用jps命令看到如下进程</div><div class="line"># jps</div><div class="line">27442 HQuorumPeer</div><div class="line">27668 Jps</div><div class="line">27509 HMaster</div><div class="line">27593 HRegionServer</div></pre></td></tr></table></figure>
+<h6 id="hbase的web页面（机器的域名是linu1）"><a href="#hbase的web页面（机器的域名是linu1）" class="headerlink" title="hbase的web页面（机器的域名是linu1）"></a>hbase的web页面（机器的域名是linu1）</h6><p><a href="http://linux1:16010/master-status" target="_blank" rel="external">http://linux1:16010/master-status</a></p>
+<p><strong>注意</strong><br>windows环境下用java api 连接hbase可能碰到的问题：</p>
+<ol>
+<li>window配置host：<br>ip linux1 </li>
+<li>linux配置host(是的，linux也要配置，应为我们启动的是伪分布式集群):<br>ip linux1</li>
+<li>winutils.exe</li>
+</ol>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/note.github.io/tags/hbase/" rel="tag"># hbase</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/note.github.io/2017/10/15/flume配置/" rel="next" title="flume配置">
+                <i class="fa fa-chevron-left"></i> flume配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -432,6 +478,8 @@
 
 
           
+  
+
 
         </div>
         
@@ -452,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -552,6 +609,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#伪分布式模式"><span class="nav-number">1.</span> <span class="nav-text">伪分布式模式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#下载Hbase"><span class="nav-number">1.1.</span> <span class="nav-text">下载Hbase</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#配置-HBASE-HOME-conf-hbase-env-sh"><span class="nav-number">1.2.</span> <span class="nav-text">配置 $HBASE_HOME/conf/hbase-env.sh</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#配置-HBASE-HOME-conf-hbase-site-xml（这里hbase-rootdir使用的是文件系统，非hdfs）"><span class="nav-number">1.3.</span> <span class="nav-text">配置 $HBASE_HOME/conf/hbase-site.xml（这里hbase.rootdir使用的是文件系统，非hdfs）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#启动与停止"><span class="nav-number">1.4.</span> <span class="nav-text">启动与停止</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#hbase的web页面（机器的域名是linu1）"><span class="nav-number">1.5.</span> <span class="nav-text">hbase的web页面（机器的域名是linu1）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -678,6 +751,10 @@
 
 
   
+  <script type="text/javascript" src="/note.github.io/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/note.github.io/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
