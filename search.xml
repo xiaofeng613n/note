@@ -24,18 +24,6 @@
   </entry>
   <entry>
     <title><![CDATA[my first post]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>aop</tag>
-        <tag>ioc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[my first post]]></title>
     <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%20(2)%2F</url>
     <content type="text"></content>
       <categories>
@@ -52,6 +40,18 @@
     <content type="text"></content>
       <categories>
         <category>spring</category>
+      </categories>
+      <tags>
+        <tag>aop</tag>
+        <tag>ioc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[my first post]]></title>
+    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>java</category>
       </categories>
       <tags>
         <tag>aop</tag>
