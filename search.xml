@@ -24,6 +24,18 @@
   </entry>
   <entry>
     <title><![CDATA[my first post]]></title>
+    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>aop</tag>
+        <tag>ioc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[my first post]]></title>
     <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%20(2)%2F</url>
     <content type="text"></content>
       <categories>
@@ -48,18 +60,6 @@
   </entry>
   <entry>
     <title><![CDATA[my first post]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>aop</tag>
-        <tag>ioc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[my first post]]></title>
     <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%2F</url>
     <content type="text"></content>
       <categories>
@@ -73,6 +73,6 @@
   <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment 使用问题本地默认端口被占用导致无法访问window:123netstat -aon|findstr &quot;4000&quot; // 得到占用端口进程的pidtasklist|findstr &quot;884&quot; //根据pid查看具体应用taskkill /f /t /im FoxitProtect.exe //结束应用 linux:netstat -anp | grep 端口号或者netstat-tunlp查找，然后kill即可]]></content>
   </entry>
 </search>
