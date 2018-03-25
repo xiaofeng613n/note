@@ -1,78 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[HBase配置]]></title>
-    <url>%2Fnote.github.io%2F2018%2F01%2F14%2FHBase%E9%85%8D%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[环境linux:centos7java:1.8 SSH设置和密钥生成SSH设置需要在集群上执行不同的操作，如启动，停止和分布式守护shell操作。进行身份验证不同的Hadoop用户，需要一种用于Hadoop的用户提供的公钥/私钥对，并用不同的用户共享。以下的命令被用于生成使用SSH密钥值对。复制公钥从id_rsa.pub为authorized_keys，并提供所有者，读写权限到authorized_keys文件。 12345# ssh-keygen -t rsa# cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys# chmod 0600 ~/.ssh///验证# ssh localhost 伪分布式模式下载Hbase12# wget http://mirrors.sonic.net/apache/hbase/1.4.0/hbase-1.4.0-bin.tar.gz# tar -zxvf hbase-1.4.0-bin.tar.gz 配置 $HBASE_HOME/conf/hbase-env.sh12export JAVA_HOME=/usr/java/jdk1.8.0_144/export HBASE_MANAGES_ZK=true 配置 $HBASE_HOME/conf/hbase-site.xml（这里hbase.rootdir使用的是文件系统，非hdfs）123456789101112131415161718192021222324&lt;property&gt; &lt;name&gt;hbase.rootdir&lt;/name&gt; &lt;value&gt;file:/usr/local/soft/hbase-1.4.0/h-data&lt;/value&gt;&lt;/property&gt;&lt;property&gt; &lt;name&gt;hbase.master.port&lt;/name&gt; &lt;value&gt;16000&lt;/value&gt;&lt;/property&gt;&lt;property&gt; &lt;name&gt;hbase.master.info.port&lt;/name&gt; &lt;value&gt;16010&lt;/value&gt;&lt;/property&gt;&lt;property&gt; &lt;name&gt;hbase.regionserver.port&lt;/name&gt; &lt;value&gt;16201&lt;/value&gt;&lt;/property&gt;&lt;property&gt; &lt;name&gt;hbase.regionserver.info.port&lt;/name&gt; &lt;value&gt;16301&lt;/value&gt;&lt;/property&gt;&lt;property&gt; &lt;name&gt;hbase.cluster.distributed&lt;/name&gt; &lt;value&gt;true&lt;/value&gt;&lt;/property&gt; 启动与停止123456789# cd $HBASE_HOME/bin # sh start-hbase.sh# sh stop-hbase.sh// 启动后可以使用jps命令看到如下进程# jps27442 HQuorumPeer27668 Jps27509 HMaster27593 HRegionServer hbase的web页面（机器的域名是linu1）http://linux1:16010/master-status 注意windows环境下用java api 连接hbase可能碰到的问题： window配置host：ip linux1 linux配置host(是的，linux也要配置，应为我们启动的是伪分布式集群):ip linux1 winutils.exe]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>hbase</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[flume配置]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F15%2Fflume%E9%85%8D%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[环境linux:centos7flume:1.7kafka:kafka_2.10-0.10.1.0(已安装好，kafka安装) 1.下载flume，解压1234# pwd/usr/local/soft/apache-flume-1.7.0-bin# lsbin CHANGELOG conf DEVNOTES doap_Flume.rdf docs lib LICENSE NOTICE README.md RELEASE-NOTES tools 2.配置在conf目录根据模板配置文件flume-conf.properties.template配置agent和collect这里在一台机器上配置了3个agent和1个collect,如下： agent1.properties123456789101112131415agent1.sources = s1agent1.channels = c1agent1.sinks = k1agent1.sources.s1.type=execagent1.sources.s1.command=tail -F /usr/local/soft/log/a.logagent1.sources.s1.channels=c1agent1.channels.c1.type=memoryagent1.channels.c1.capacity=10000agent1.channels.c1.transactionCapacity=100#设置接收器agent1.sinks.k1.channel=c1agent1.sinks.k1.type= avroagent1.sinks.k1.hostname=192.168.1.108agent1.sinks.k1.port=40041 agent2.properties123456789101112131415agent2.sources = s1agent2.channels = c1agent2.sinks = k1agent2.sources.s1.type=execagent2.sources.s1.command=tail -F /usr/local/soft/log/b.logagent2.sources.s1.channels=c1agent2.channels.c1.type=memoryagent2.channels.c1.capacity=10000agent2.channels.c1.transactionCapacity=100#设置接收器agent2.sinks.k1.channel=c1agent2.sinks.k1.type= avroagent2.sinks.k1.hostname=192.168.1.108agent2.sinks.k1.port=40041 agent3.properties123456789101112131415agent3.sources = s1agent3.channels = c1agent3.sinks = k1agent3.sources.s1.type=execagent3.sources.s1.command=tail -F /usr/local/soft/log/c.logagent3.sources.s1.channels=c1agent3.channels.c1.type=memoryagent3.channels.c1.capacity=10000agent3.channels.c1.transactionCapacity=100#设置接收器agent3.sinks.k1.channel=c1agent3.sinks.k1.type= avroagent3.sinks.k1.hostname=192.168.1.108agent3.sinks.k1.port=40041 collect.properties123456789101112131415161718192021222324agentx.sources = s1agentx.channels = c1agentx.sinks = k1agentx.sources.s1.channels = c1agentx.sources.s1.type = avroagentx.sources.s1.bind = 192.168.1.108agentx.sources.s1.port = 40041agentx.sources.s1.threads = 2agentx.channels.c1.type=memoryagentx.channels.c1.capacity=10000agentx.channels.c1.transactionCapacity=100#设置kafka接收器agentx.sinks.k1.type= org.apache.flume.sink.kafka.KafkaSink#设置Kafka的broker地址和端口号agentx.sinks.k1.brokerList=192.168.1.108:9093#设置Kafka的Topicagentx.sinks.k1.topic=topicOfFlume#设置序列化方式agentx.sinks.k1.serializer.class=kafka.serializer.StringEncoderagentx.sinks.k1.channel=c1 可以看出3个agent的配置基本相同，就是sources监听文件不一样 3.启动（注意：-n 后的参数要和配置文件中的agent名相同）在flume目录下执行如下1234# bin/flume-ng agent --conf ./conf/ -f conf/collect.properties -Dflume.root.logger=DEBUG,console -n agentx# bin/flume-ng agent --conf ./conf/ -f conf/agent1.properties -Dflume.root.logger=DEBUG,console -n agent1# bin/flume-ng agent --conf ./conf/ -f conf/agent2.properties -Dflume.root.logger=DEBUG,console -n agent2# bin/flume-ng agent --conf ./conf/ -f conf/agent3.properties -Dflume.root.logger=DEBUG,console -n agent3 启动是否成功可以查看（这是在一台机器上部署的）12345# jps | grep App*26160 Application41320 Application26266 Application26205 Application 4.测试手动或脚本向监听的文件添加内容，kafka中会有数据写入,测试消费： 123456789101112131415161718192021222324252627282930public class KafkaTest&#123; public static void main(String[] args) throws ExecutionException, InterruptedException &#123; testConsumer(); &#125; public static void testConsumer() &#123; Properties props = new Properties(); props.put("bootstrap.servers", "192.168.1.108:9093"); props.put("group.id", "groupC");// props.put("enable.auto.commit", "true");// props.put("auto.commit.interval.ms", "1000"); props.put("auto.offset.reset", "earliest"); props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer"); props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer"); KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(props); consumer.subscribe(Arrays.asList("topicOfFlume")); while (true) &#123; ConsumerRecords&lt;String, String&gt; records = consumer.poll(100); for (ConsumerRecord&lt;String, String&gt; record : records) &#123; System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()); &#125; &#125; &#125;&#125; 12345 &lt;dependency&gt; &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt; &lt;artifactId&gt;kafka-clients&lt;/artifactId&gt; &lt;version&gt;0.10.0.0&lt;/version&gt;&lt;/dependency&gt;]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>flume-ng</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[my first post]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%20(2)%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>spring</category>
-      </categories>
-      <tags>
-        <tag>aop</tag>
-        <tag>ioc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[my first post]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%20(3)%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>spring</category>
-      </categories>
-      <tags>
-        <tag>aop</tag>
-        <tag>ioc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[my first post]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%20-%20%E5%89%AF%E6%9C%AC%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>aop</tag>
-        <tag>ioc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[my first post]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fmy-first-post%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>aop</tag>
-        <tag>ioc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2Fnote.github.io%2F2017%2F10%2F03%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment 使用问题本地默认端口被占用导致无法访问window:123netstat -aon|findstr &quot;4000&quot; // 得到占用端口进程的pidtasklist|findstr &quot;884&quot; //根据pid查看具体应用taskkill /f /t /im FoxitProtect.exe //结束应用 linux:netstat -anp | grep 端口号或者netstat-tunlp查找，然后kill即可]]></content>
-  </entry>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[HBase配置]]></title>
+      <url>/note.github.io/2018/01/14/HBase%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p><strong>环境</strong><br>linux:centos7<br>java:1.8</p>
+<p>SSH设置和密钥生成<br>SSH设置需要在集群上执行不同的操作，如启动，停止和分布式守护shell操作。进行身份验证不同的Hadoop用户，需要一种用于Hadoop的用户提供的公钥/私钥对，并用不同的用户共享。<br>以下的命令被用于生成使用SSH密钥值对。复制公钥从id_rsa.pub为authorized_keys，并提供所有者，读写权限到authorized_keys文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># ssh-keygen -t rsa</div><div class="line"># cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</div><div class="line"># chmod 0600 ~/.ssh/</div><div class="line">//验证</div><div class="line"># ssh localhost</div></pre></td></tr></table></figure>
+<h5 id="伪分布式模式"><a href="#伪分布式模式" class="headerlink" title="伪分布式模式"></a>伪分布式模式</h5><h6 id="下载Hbase"><a href="#下载Hbase" class="headerlink" title="下载Hbase"></a>下载Hbase</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># wget http://mirrors.sonic.net/apache/hbase/1.4.0/hbase-1.4.0-bin.tar.gz</div><div class="line"># tar -zxvf hbase-1.4.0-bin.tar.gz</div></pre></td></tr></table></figure>
+<h6 id="配置-HBASE-HOME-conf-hbase-env-sh"><a href="#配置-HBASE-HOME-conf-hbase-env-sh" class="headerlink" title="配置 $HBASE_HOME/conf/hbase-env.sh"></a>配置 $HBASE_HOME/conf/hbase-env.sh</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/java/jdk1.8.0_144/</div><div class="line">export HBASE_MANAGES_ZK=true</div></pre></td></tr></table></figure>
+<h6 id="配置-HBASE-HOME-conf-hbase-site-xml（这里hbase-rootdir使用的是文件系统，非hdfs）"><a href="#配置-HBASE-HOME-conf-hbase-site-xml（这里hbase-rootdir使用的是文件系统，非hdfs）" class="headerlink" title="配置 $HBASE_HOME/conf/hbase-site.xml（这里hbase.rootdir使用的是文件系统，非hdfs）"></a>配置 $HBASE_HOME/conf/hbase-site.xml（这里hbase.rootdir使用的是文件系统，非hdfs）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.rootdir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/usr/local/soft/hbase-1.4.0/h-data&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.master.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16000&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.master.info.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16010&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.regionserver.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16201&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.regionserver.info.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;16301&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;</div><div class="line">    &lt;value&gt;true&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
+<h6 id="启动与停止"><a href="#启动与停止" class="headerlink" title="启动与停止"></a>启动与停止</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># cd $HBASE_HOME/bin </div><div class="line"># sh start-hbase.sh</div><div class="line"># sh stop-hbase.sh</div><div class="line">// 启动后可以使用jps命令看到如下进程</div><div class="line"># jps</div><div class="line">27442 HQuorumPeer</div><div class="line">27668 Jps</div><div class="line">27509 HMaster</div><div class="line">27593 HRegionServer</div></pre></td></tr></table></figure>
+<h6 id="hbase的web页面（机器的域名是linu1）"><a href="#hbase的web页面（机器的域名是linu1）" class="headerlink" title="hbase的web页面（机器的域名是linu1）"></a>hbase的web页面（机器的域名是linu1）</h6><p><a href="http://linux1:16010/master-status" target="_blank" rel="external">http://linux1:16010/master-status</a></p>
+<p><strong>注意</strong><br>windows环境下用java api 连接hbase可能碰到的问题：</p>
+<ol>
+<li>window配置host：<br>ip linux1 </li>
+<li>linux配置host(是的，linux也要配置，应为我们启动的是伪分布式集群):<br>ip linux1</li>
+<li>winutils.exe</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 大数据 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hbase </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[flume配置]]></title>
+      <url>/note.github.io/2017/10/15/flume%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p><strong>环境</strong><br>linux:centos7<br>flume:1.7<br>kafka:kafka_2.10-0.10.1.0(已安装好，<a href="http://" target="_blank" rel="external">kafka安装</a>)</p>
+<h6 id="1-下载flume，解压"><a href="#1-下载flume，解压" class="headerlink" title="1.下载flume，解压"></a>1.下载flume，解压</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># pwd</div><div class="line">/usr/local/soft/apache-flume-1.7.0-bin</div><div class="line"># ls</div><div class="line">bin  CHANGELOG  conf  DEVNOTES  doap_Flume.rdf  docs  lib  LICENSE  NOTICE  README.md  RELEASE-NOTES  tools</div></pre></td></tr></table></figure>
+<h6 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h6><p>在conf目录根据模板配置文件flume-conf.properties.template配置agent和collect<br>这里在一台机器上配置了3个agent和1个collect,如下：  </p>
+<p>agent1.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent1.sources = s1</div><div class="line">agent1.channels = c1</div><div class="line">agent1.sinks = k1</div><div class="line"></div><div class="line">agent1.sources.s1.type=exec</div><div class="line">agent1.sources.s1.command=tail -F /usr/local/soft/log/a.log</div><div class="line">agent1.sources.s1.channels=c1</div><div class="line">agent1.channels.c1.type=memory</div><div class="line">agent1.channels.c1.capacity=10000</div><div class="line">agent1.channels.c1.transactionCapacity=100</div><div class="line">#设置接收器</div><div class="line">agent1.sinks.k1.channel=c1</div><div class="line">agent1.sinks.k1.type= avro</div><div class="line">agent1.sinks.k1.hostname=192.168.1.108</div><div class="line">agent1.sinks.k1.port=40041</div></pre></td></tr></table></figure></p>
+<p>agent2.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent2.sources = s1</div><div class="line">agent2.channels = c1</div><div class="line">agent2.sinks = k1</div><div class="line"></div><div class="line">agent2.sources.s1.type=exec</div><div class="line">agent2.sources.s1.command=tail -F /usr/local/soft/log/b.log</div><div class="line">agent2.sources.s1.channels=c1</div><div class="line">agent2.channels.c1.type=memory</div><div class="line">agent2.channels.c1.capacity=10000</div><div class="line">agent2.channels.c1.transactionCapacity=100</div><div class="line">#设置接收器</div><div class="line">agent2.sinks.k1.channel=c1</div><div class="line">agent2.sinks.k1.type= avro</div><div class="line">agent2.sinks.k1.hostname=192.168.1.108</div><div class="line">agent2.sinks.k1.port=40041</div></pre></td></tr></table></figure></p>
+<p>agent3.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">agent3.sources = s1</div><div class="line">agent3.channels = c1</div><div class="line">agent3.sinks = k1</div><div class="line"></div><div class="line">agent3.sources.s1.type=exec</div><div class="line">agent3.sources.s1.command=tail -F /usr/local/soft/log/c.log</div><div class="line">agent3.sources.s1.channels=c1</div><div class="line">agent3.channels.c1.type=memory</div><div class="line">agent3.channels.c1.capacity=10000</div><div class="line">agent3.channels.c1.transactionCapacity=100</div><div class="line">#设置接收器</div><div class="line">agent3.sinks.k1.channel=c1</div><div class="line">agent3.sinks.k1.type= avro</div><div class="line">agent3.sinks.k1.hostname=192.168.1.108</div><div class="line">agent3.sinks.k1.port=40041</div></pre></td></tr></table></figure></p>
+<p>collect.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">agentx.sources = s1</div><div class="line">agentx.channels = c1</div><div class="line">agentx.sinks = k1</div><div class="line"></div><div class="line">agentx.sources.s1.channels = c1</div><div class="line">agentx.sources.s1.type = avro</div><div class="line">agentx.sources.s1.bind = 192.168.1.108</div><div class="line">agentx.sources.s1.port = 40041</div><div class="line">agentx.sources.s1.threads = 2</div><div class="line"></div><div class="line">agentx.channels.c1.type=memory</div><div class="line">agentx.channels.c1.capacity=10000</div><div class="line">agentx.channels.c1.transactionCapacity=100</div><div class="line"></div><div class="line">#设置kafka接收器</div><div class="line">agentx.sinks.k1.type= org.apache.flume.sink.kafka.KafkaSink</div><div class="line">#设置Kafka的broker地址和端口号</div><div class="line">agentx.sinks.k1.brokerList=192.168.1.108:9093</div><div class="line">#设置Kafka的Topic</div><div class="line">agentx.sinks.k1.topic=topicOfFlume</div><div class="line">#设置序列化方式</div><div class="line">agentx.sinks.k1.serializer.class=kafka.serializer.StringEncoder</div><div class="line"></div><div class="line">agentx.sinks.k1.channel=c1</div></pre></td></tr></table></figure></p>
+<p>可以看出3个agent的配置基本相同，就是sources监听文件不一样</p>
+<h6 id="3-启动"><a href="#3-启动" class="headerlink" title="3.启动"></a>3.启动</h6><p>（注意：-n 后的参数要和配置文件中的agent名相同）<br>在flume目录下执行如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># bin/flume-ng agent --conf ./conf/ -f conf/collect.properties -Dflume.root.logger=DEBUG,console -n agentx</div><div class="line"># bin/flume-ng agent --conf ./conf/ -f conf/agent1.properties -Dflume.root.logger=DEBUG,console -n agent1</div><div class="line"># bin/flume-ng agent --conf ./conf/ -f conf/agent2.properties -Dflume.root.logger=DEBUG,console -n agent2</div><div class="line"># bin/flume-ng agent --conf ./conf/ -f conf/agent3.properties -Dflume.root.logger=DEBUG,console -n agent3</div></pre></td></tr></table></figure></p>
+<p>启动是否成功可以查看（这是在一台机器上部署的）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># jps | grep App*</div><div class="line">26160 Application</div><div class="line">41320 Application</div><div class="line">26266 Application</div><div class="line">26205 Application</div></pre></td></tr></table></figure></p>
+<h6 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h6><p>手动或脚本向监听的文件添加内容，kafka中会有数据写入,测试消费：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaTest</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException</span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		testConsumer();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testConsumer</span><span class="params">()</span></span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line"></div><div class="line">		Properties props = <span class="keyword">new</span> Properties();</div><div class="line">		props.put(<span class="string">"bootstrap.servers"</span>, <span class="string">"192.168.1.108:9093"</span>);</div><div class="line">		props.put(<span class="string">"group.id"</span>, <span class="string">"groupC"</span>);</div><div class="line"><span class="comment">//		props.put("enable.auto.commit", "true");</span></div><div class="line"><span class="comment">//		props.put("auto.commit.interval.ms", "1000");</span></div><div class="line">		props.put(<span class="string">"auto.offset.reset"</span>, <span class="string">"earliest"</span>);</div><div class="line">		props.put(<span class="string">"key.deserializer"</span>, <span class="string">"org.apache.kafka.common.serialization.StringDeserializer"</span>);</div><div class="line">		props.put(<span class="string">"value.deserializer"</span>, <span class="string">"org.apache.kafka.common.serialization.StringDeserializer"</span>);</div><div class="line">		KafkaConsumer&lt;String, String&gt; consumer = <span class="keyword">new</span> KafkaConsumer&lt;&gt;(props);</div><div class="line">		consumer.subscribe(Arrays.asList(<span class="string">"topicOfFlume"</span>));</div><div class="line">		<span class="keyword">while</span> (<span class="keyword">true</span>)</div><div class="line">		&#123;</div><div class="line">			ConsumerRecords&lt;String, String&gt; records = consumer.poll(<span class="number">100</span>);</div><div class="line">			<span class="keyword">for</span> (ConsumerRecord&lt;String, String&gt; record : records)</div><div class="line">			&#123;</div><div class="line">				System.out.printf(<span class="string">"offset = %d, key = %s, value = %s%n"</span>, record.offset(), record.key(), record.value());</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.kafka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kafka-clients<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.10.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> flume-ng </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[my first post]]></title>
+      <url>/note.github.io/2017/10/03/my-first-post%20-%20%E5%89%AF%E6%9C%AC%20(2)/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> spring </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> aop </tag>
+            
+            <tag> ioc </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[my first post]]></title>
+      <url>/note.github.io/2017/10/03/my-first-post%20-%20%E5%89%AF%E6%9C%AC%20(3)/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> spring </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> aop </tag>
+            
+            <tag> ioc </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[my first post]]></title>
+      <url>/note.github.io/2017/10/03/my-first-post%20-%20%E5%89%AF%E6%9C%AC/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> aop </tag>
+            
+            <tag> ioc </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[my first post]]></title>
+      <url>/note.github.io/2017/10/03/my-first-post/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> aop </tag>
+            
+            <tag> ioc </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello World]]></title>
+      <url>/note.github.io/2017/10/03/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<p><strong>使用问题</strong><br>本地默认端口被占用导致无法访问<br>window:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">netstat -aon|findstr &quot;4000&quot;  // 得到占用端口进程的pid</div><div class="line">tasklist|findstr &quot;884&quot; //根据pid查看具体应用</div><div class="line">taskkill /f /t /im FoxitProtect.exe  //结束应用</div></pre></td></tr></table></figure></p>
+<p>linux:<br>netstat -anp | grep 端口号或者netstat-tunlp查找，然后kill即可</p>
+]]></content>
+      
+        
+    </entry>
+    
+  
+  
 </search>
