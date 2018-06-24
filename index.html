@@ -308,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/03/25/flume组件/">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/06/30/flume总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaofeng">
@@ -327,7 +327,471 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/note.github.io/2018/03/25/flume组件/" itemprop="url">flume源码-组件</a></h1>
+                <a class="post-title-link" href="/note.github.io/2018/06/30/flume总结/" itemprop="url">flume总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-30T13:23:34+08:00">
+                2018-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          参考：
+ * flume官网
+ * 大步流星的博客-flume
+ * Flume-ng FileChannel原理解析
+ * 随笔分类 - Flume-NG
+ * Flume FileChannel优化（扩展）实践指南 
+ * Flume架构与源码分析
+ * 基于Flume的美团日志收集系统(一)架构和设计
+ * 美团对 flume 的扩展和改进（代码）
+ * 魅族大数据之流平台设计部署实践
+
+问题
+一个channel，多个sink 
+
+ * Proposal of Transactional Multiplex (fan out) Sink 
+ * Multiple Sinks can co
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/note.github.io/2018/06/30/flume总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/06/30/flume日志收集分层架构应用实践（转）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaofeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/note.github.io/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰's Harbor">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/note.github.io/2018/06/30/flume日志收集分层架构应用实践（转）/" itemprop="url">flume日志收集分层架构应用实践（转）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-30T13:23:34+08:00">
+                2018-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          原文链接：Flume日志收集分层架构应用实践
+
+为什么要对Flume日志收集系统进行分层设计
+基于Flume设计实现分层日志收集系统，到底有什么好处呢？我们可以先看一下，如果不分层，会带来哪些问题：
+
+ * 如果需要通过Kafka去缓冲上游基于Flume收集而构建的日志流，对于数据平台内部服务器产生的数据还好，但是如果日志数据是跨业务组，甚至是跨部门，那么就需要将Kafka相关信息暴露给外部，这样对Kafka的访问便不是数据平台内部可控的
+ * 如果是外部日志进入平台内部HDFS，这样如果需要对Hadoop系统进行升级或例行维护，这种直连的方式会影响到上游部署Flume的日志流的始端日志收集服
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/note.github.io/2018/06/30/flume日志收集分层架构应用实践（转）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/04/08/flume源码-组件TaildirSource/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaofeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/note.github.io/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰's Harbor">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/note.github.io/2018/04/08/flume源码-组件TaildirSource/" itemprop="url">flume源码-组件TaildirSource</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T13:23:34+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          TaildirSource
+配置加载（configure方法）和资源关闭（stop方法）省略，主要是start和process方法：
+
+12345678910111213
+
+public synchronized void start() {    ...    reader = new ReliableTaildirEventReader.Builder()        ...          .build();    ...    idleFileChecker.scheduleWithFixedDelay(new idleFileCheckerRunnable(),idleTimeo
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/note.github.io/2018/04/08/flume源码-组件TaildirSource/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/03/25/flume源码-组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaofeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/note.github.io/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰's Harbor">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/note.github.io/2018/03/25/flume源码-组件/" itemprop="url">flume源码-组件</a></h1>
         
 
         <div class="post-meta">
@@ -411,7 +875,7 @@ public interface PollableSource extends Source    //有process()方法来处理�
 前面的flume启动过程已经分析过了，在调用AbstractConfigurati
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/note.github.io/2018/03/25/flume组件/#more" rel="contents">
+            <a class="btn" href="/note.github.io/2018/03/25/flume源码-组件/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -462,7 +926,7 @@ public interface PollableSource extends Source    //有process()方法来处理�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/03/23/flume启动/">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/03/23/flume源码-启动/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaofeng">
@@ -481,7 +945,7 @@ public interface PollableSource extends Source    //有process()方法来处理�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/note.github.io/2018/03/23/flume启动/" itemprop="url">flume源码-启动</a></h1>
+                <a class="post-title-link" href="/note.github.io/2018/03/23/flume源码-启动/" itemprop="url">flume源码-启动</a></h1>
         
 
         <div class="post-meta">
@@ -559,460 +1023,17 @@ public interface PollableSource extends Source    //有process()方法来处理�
 Application.java 31行
 application.handleConfigurationEvent(configurationProvider.getConfiguration());
 
-12345678
+AbstractConfigurationProvider：
+1234567
 
-AbstractConfigurationProvider：public MaterializedConfiguration getConfiguration() {    ...    loadChann
+public MaterializedConfiguration getConfiguration() {    ...    loadChann
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/note.github.io/2018/03/23/flume启动/#more" rel="contents">
+            <a class="btn" href="/note.github.io/2018/03/23/flume源码-启动/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/01/14/HBase配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaofeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/note.github.io/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="峰's Harbor">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/note.github.io/2018/01/14/HBase配置/" itemprop="url">HBase配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-14T00:32:20+08:00">
-                2018-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/note.github.io/categories/大数据/" itemprop="url" rel="index">
-                    <span itemprop="name">大数据</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          HBase伪集群模式配置与注意事项
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/note.github.io/2018/01/14/HBase配置/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2017/10/15/flume配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaofeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/note.github.io/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="峰's Harbor">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/note.github.io/2017/10/15/flume配置/" itemprop="url">flume配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T21:35:49+08:00">
-                2017-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          环境
-linux:centos7
-flume:1.7
-kafka:kafka_2.10-0.10.1.0(已安装好，kafka安装)
-
-1.下载flume，解压
-1234
-
-# pwd/usr/local/soft/apache-flume-1.7.0-bin# lsbin  CHANGELOG  conf  DEVNOTES  doap_Flume.rdf  docs  lib  LICENSE  NOTICE  README.md  RELEASE-NOTES  tools
-
-2.配置
-在conf目录根据模板配置文件flume-conf.properties.template配置agent
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/note.github.io/2017/10/15/flume配置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2017/10/03/my-first-post - 副本 (2)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiaofeng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/note.github.io/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="峰's Harbor">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/note.github.io/2017/10/03/my-first-post - 副本 (2)/" itemprop="url">my first post</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T15:31:18+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/note.github.io/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
         
       
     </div>

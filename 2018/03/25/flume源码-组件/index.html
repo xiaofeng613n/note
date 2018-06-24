@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java, shenzheng" />
+  <meta name="keywords" content="flume-ng," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="每天进步一点点">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://xiaofeng613n.github.io/about/index.html">
+<meta name="description" content="Source&amp;SourceRunner&amp;ChannelProcessor&amp;ChannelSelector flume的source分为两种 12  public interface PollableSource extends Source    //有process()方法来处理。系统自动调用process()public interface EventDrivenSource extends">
+<meta name="keywords" content="flume-ng">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flume源码-组件">
+<meta property="og:url" content="https://xiaofeng613n.github.io/2018/03/25/flume源码-组件/index.html">
 <meta property="og:site_name" content="峰&#39;s Harbor">
-<meta property="og:description" content="每天进步一点点">
+<meta property="og:description" content="Source&amp;SourceRunner&amp;ChannelProcessor&amp;ChannelSelector flume的source分为两种 12  public interface PollableSource extends Source    //有process()方法来处理。系统自动调用process()public interface EventDrivenSource extends">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-03T09:58:44.925Z">
+<meta property="og:updated_time" content="2018-06-24T02:57:53.755Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="每天进步一点点">
+<meta name="twitter:title" content="flume源码-组件">
+<meta name="twitter:description" content="Source&amp;SourceRunner&amp;ChannelProcessor&amp;ChannelSelector flume的source分为两种 12  public interface PollableSource extends Source    //有process()方法来处理。系统自动调用process()public interface EventDrivenSource extends">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://xiaofeng613n.github.io/about/"/>
+  <link rel="canonical" href="https://xiaofeng613n.github.io/2018/03/25/flume源码-组件/"/>
 
 
 
 
 
-  <title>about | 峰's Harbor</title>
+  <title>flume源码-组件 | 峰's Harbor</title>
   
 
 
@@ -296,33 +297,196 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/03/25/flume源码-组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaofeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/note.github.io/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰's Harbor">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">flume源码-组件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-25T13:23:34+08:00">
+                2018-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h5 id="Source-amp-SourceRunner-amp-ChannelProcessor-amp-ChannelSelector"><a href="#Source-amp-SourceRunner-amp-ChannelProcessor-amp-ChannelSelector" class="headerlink" title="Source&amp;SourceRunner&amp;ChannelProcessor&amp;ChannelSelector"></a>Source&amp;SourceRunner&amp;ChannelProcessor&amp;ChannelSelector</h5><p>flume的source分为两种<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public interface PollableSource extends Source    //有process()方法来处理。系统自动调用process()</div><div class="line">public interface EventDrivenSource extends Source //没有process()方法，而是通过start()来执行向channel中发送送数据的操作。</div></pre></td></tr></table></figure></p>
+<p>前面的flume启动过程已经分析过了，在调用AbstractConfigurationProvider.loadSources方法中，会根据配置的Source具体实现接口调用SourceRunner.forSource方法包装成对应的SourceRunner</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public static SourceRunner forSource(Source source) &#123;</div><div class="line">    SourceRunner runner = null;</div><div class="line"></div><div class="line">    if (source instanceof PollableSource) &#123;</div><div class="line">      runner = new PollableSourceRunner();</div><div class="line">      ((PollableSourceRunner) runner).setSource((PollableSource) source);</div><div class="line">    &#125; else if (source instanceof EventDrivenSource) &#123;</div><div class="line">      runner = new EventDrivenSourceRunner();</div><div class="line">      ((EventDrivenSourceRunner) runner).setSource((EventDrivenSource) source);</div><div class="line">    &#125; else &#123;</div><div class="line">      throw new IllegalArgumentException(&quot;No known runner type for source &quot;+ source);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return runner;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class EventDrivenSourceRunner extends SourceRunner &#123;</div><div class="line">  private LifecycleState lifecycleState;</div><div class="line">  ...</div><div class="line">  @Override</div><div class="line">  public void start() &#123;</div><div class="line">    Source source = getSource();</div><div class="line">    ChannelProcessor cp = source.getChannelProcessor();</div><div class="line">    cp.initialize();</div><div class="line">    source.start();</div><div class="line">    lifecycleState = LifecycleState.START;</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>EventDrivenSourceRunner的start方法逻辑比较简单：</p>
+<ol>
+<li>初始化ChannelProcessor</li>
+<li>执行source.start()<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">public class PollableSourceRunner extends SourceRunner &#123;</div><div class="line"></div><div class="line">  private static final Logger logger = LoggerFactory.getLogger(PollableSourceRunner.class);</div><div class="line"></div><div class="line">  private AtomicBoolean shouldStop;</div><div class="line"></div><div class="line">  private CounterGroup counterGroup;</div><div class="line">  private PollingRunner runner;</div><div class="line">  private Thread runnerThread;</div><div class="line">  private LifecycleState lifecycleState;</div><div class="line"></div><div class="line"> </div><div class="line">  @Override</div><div class="line">  public void start() &#123;</div><div class="line">    PollableSource source = (PollableSource) getSource();</div><div class="line">    ChannelProcessor cp = source.getChannelProcessor();</div><div class="line">    cp.initialize();</div><div class="line">    source.start();</div><div class="line"></div><div class="line">    runner = new PollingRunner();</div><div class="line"></div><div class="line">    runner.source = source;</div><div class="line">    runner.counterGroup = counterGroup;</div><div class="line">    runner.shouldStop = shouldStop;</div><div class="line"></div><div class="line">    runnerThread = new Thread(runner);</div><div class="line">    runnerThread.setName(getClass().getSimpleName() + &quot;-&quot; + </div><div class="line">        source.getClass().getSimpleName() + &quot;-&quot; + source.getName());</div><div class="line">    runnerThread.start();</div><div class="line"></div><div class="line">    lifecycleState = LifecycleState.START;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public static class PollingRunner implements Runnable &#123;</div><div class="line"></div><div class="line">    private PollableSource source;</div><div class="line">    ...</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">      ...</div><div class="line">      while (!shouldStop.get()) &#123;</div><div class="line">        counterGroup.incrementAndGet(&quot;runner.polls&quot;);</div><div class="line">        ...</div><div class="line">        if (source.process().equals(PollableSource.Status.BACKOFF)) &#123; //调用process方法</div><div class="line">            counterGroup.incrementAndGet(&quot;runner.backoffs&quot;);</div><div class="line"></div><div class="line">            Thread.sleep(Math.min(</div><div class="line">                counterGroup.incrementAndGet(&quot;runner.backoffs.consecutive&quot;)</div><div class="line">                * source.getBackOffSleepIncrement(), source.getMaxBackOffSleepInterval()));</div><div class="line">          &#125; else &#123;</div><div class="line">            counterGroup.set(&quot;runner.backoffs.consecutive&quot;, 0L);</div><div class="line">        &#125;</div><div class="line">        ...</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>PollableSourceRunner的start</p>
+<ol>
+<li>初始化ChannelProcessor </li>
+<li>启动一个线程runnerThread，循环调用source（PollableSource）的process方法（如果失败等待超时时间之后重试）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ChannelProcessor</div><div class="line">    MultiplexingChannelSelector  // 可以选择该发往哪些channel</div><div class="line">    ReplicatingChannelSelector // allows the event to be placed in all the channels</div></pre></td></tr></table></figure>
+<h5 id="Sink-amp-SinkRunner-amp-SinkProcessor-amp-SinkSelector"><a href="#Sink-amp-SinkRunner-amp-SinkProcessor-amp-SinkSelector" class="headerlink" title="Sink&amp;SinkRunner&amp;SinkProcessor&amp;SinkSelector"></a>Sink&amp;SinkRunner&amp;SinkProcessor&amp;SinkSelector</h5><p>flume启动分析过了SinkRunner可能对应一个sink也可能对应一个sinkgroup。因为如果配置文件中有sinkgroup则这个sinkgroup对应的sink会组成一个group然后封装为一个sinkRunner，然后不在sinkgroup中的sink会自己成为一个sinkRunner</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SinkRunner</div><div class="line">    SinkProcessor</div><div class="line">        sinks</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">public class SinkRunner implements LifecycleAware &#123;</div><div class="line">  ...</div><div class="line">  private CounterGroup counterGroup;</div><div class="line">  private PollingRunner runner;</div><div class="line">  private Thread runnerThread;</div><div class="line">  private LifecycleState lifecycleState;</div><div class="line"></div><div class="line">  private SinkProcessor policy;</div><div class="line">  ...</div><div class="line">  @Override</div><div class="line">  public void start() &#123;</div><div class="line">    SinkProcessor policy = getPolicy();</div><div class="line"></div><div class="line">    policy.start();</div><div class="line"></div><div class="line">    runner = new PollingRunner();</div><div class="line"></div><div class="line">    runner.policy = policy;</div><div class="line">    runner.counterGroup = counterGroup;</div><div class="line">    runner.shouldStop = new AtomicBoolean();</div><div class="line"></div><div class="line">    runnerThread = new Thread(runner);</div><div class="line">    runnerThread.setName(&quot;SinkRunner-PollingRunner-&quot; +</div><div class="line">        policy.getClass().getSimpleName());</div><div class="line">    runnerThread.start();</div><div class="line"></div><div class="line">    lifecycleState = LifecycleState.START;</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line"></div><div class="line">  public static class PollingRunner implements Runnable &#123;</div><div class="line">    ...</div><div class="line">    private SinkProcessor policy;</div><div class="line">    private AtomicBoolean shouldStop;</div><div class="line">    private CounterGroup counterGroup;</div><div class="line">    ...</div><div class="line">    @Override</div><div class="line">    public void run() &#123;</div><div class="line">      ...</div><div class="line">      while (!shouldStop.get()) &#123;</div><div class="line">        if (policy.process().equals(Sink.Status.BACKOFF)) &#123;</div><div class="line">            counterGroup.incrementAndGet(&quot;runner.backoffs&quot;);</div><div class="line">            Thread.sleep(Math.min(</div><div class="line">                counterGroup.incrementAndGet(&quot;runner.backoffs.consecutive&quot;)</div><div class="line">                * backoffSleepIncrement, maxBackoffSleep));</div><div class="line">        &#125; else &#123;</div><div class="line">            counterGroup.set(&quot;runner.backoffs.consecutive&quot;, 0L);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SinkRunner的start方法逻辑和PollableSourceRunner.start类似：</p>
+<ol>
+<li>调用SinkProcessor的start方法</li>
+<li>启动一个线程runnerThread去轮询SinkProcessor的process方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultSinkProcessor</span> <span class="keyword">implements</span> <span class="title">SinkProcessor</span>, <span class="title">ConfigurableComponent</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> Sink sink;</div><div class="line">  <span class="keyword">private</span> LifecycleState lifecycleState;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    Preconditions.checkNotNull(sink, <span class="string">"DefaultSinkProcessor sink not set"</span>);</div><div class="line">    sink.start();</div><div class="line">    lifecycleState = LifecycleState.START;</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Status <span class="title">process</span><span class="params">()</span> <span class="keyword">throws</span> EventDeliveryException </span>&#123;</div><div class="line">    <span class="keyword">return</span> sink.process();</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>没有sinkgroup的情况对应DefaultSinkProcessor，DefaultSinkProcessor的process直接调用sink.process<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">DefaultSinkProcessor</div><div class="line">LoadBalancingSinkProcessor</div><div class="line">    RoundRobinSinkSelector </div><div class="line">    RandomOrderSinkSelector</div><div class="line">FailoverSinkProcessor</div></pre></td></tr></table></figure></p>
+<h5 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h5><p>channel的启动也是调用start方法，具体channel的事务实现单独分析…</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/note.github.io/tags/flume-ng/" rel="tag"># flume-ng</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/note.github.io/2018/03/23/flume源码-启动/" rel="next" title="flume源码-启动">
+                <i class="fa fa-chevron-left"></i> flume源码-启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/note.github.io/2018/04/08/flume源码-组件TaildirSource/" rel="prev" title="flume源码-组件TaildirSource">
+                flume源码-组件TaildirSource <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -353,8 +517,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -453,6 +626,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Source-amp-SourceRunner-amp-ChannelProcessor-amp-ChannelSelector"><span class="nav-number">1.</span> <span class="nav-text">Source&SourceRunner&ChannelProcessor&ChannelSelector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sink-amp-SinkRunner-amp-SinkProcessor-amp-SinkSelector"><span class="nav-number">2.</span> <span class="nav-text">Sink&SinkRunner&SinkProcessor&SinkSelector</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Channel"><span class="nav-number">3.</span> <span class="nav-text">Channel</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

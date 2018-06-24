@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java, shenzheng" />
+  <meta name="keywords" content="flume-ng," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="每天进步一点点">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://xiaofeng613n.github.io/about/index.html">
+<meta name="description" content="TaildirSource 配置加载（configure方法）和资源关闭（stop方法）省略，主要是start和process方法：  12345678910111213  public synchronized void start() {    ...    reader = new ReliableTaildirEventReader.Builder()        ...">
+<meta name="keywords" content="flume-ng">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flume源码-组件TaildirSource">
+<meta property="og:url" content="https://xiaofeng613n.github.io/2018/04/08/flume源码-组件TaildirSource/index.html">
 <meta property="og:site_name" content="峰&#39;s Harbor">
-<meta property="og:description" content="每天进步一点点">
+<meta property="og:description" content="TaildirSource 配置加载（configure方法）和资源关闭（stop方法）省略，主要是start和process方法：  12345678910111213  public synchronized void start() {    ...    reader = new ReliableTaildirEventReader.Builder()        ...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-03T09:58:44.925Z">
+<meta property="og:updated_time" content="2018-06-24T02:58:43.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="每天进步一点点">
+<meta name="twitter:title" content="flume源码-组件TaildirSource">
+<meta name="twitter:description" content="TaildirSource 配置加载（configure方法）和资源关闭（stop方法）省略，主要是start和process方法：  12345678910111213  public synchronized void start() {    ...    reader = new ReliableTaildirEventReader.Builder()        ...">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://xiaofeng613n.github.io/about/"/>
+  <link rel="canonical" href="https://xiaofeng613n.github.io/2018/04/08/flume源码-组件TaildirSource/"/>
 
 
 
 
 
-  <title>about | 峰's Harbor</title>
+  <title>flume源码-组件TaildirSource | 峰's Harbor</title>
   
 
 
@@ -296,33 +297,185 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/04/08/flume源码-组件TaildirSource/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiaofeng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/note.github.io/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="峰's Harbor">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">flume源码-组件TaildirSource</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T13:23:34+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h5 id="TaildirSource"><a href="#TaildirSource" class="headerlink" title="TaildirSource"></a>TaildirSource</h5><p>配置加载（configure方法）和资源关闭（stop方法）省略，主要是start和process方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    reader = <span class="keyword">new</span> ReliableTaildirEventReader.Builder()</div><div class="line">        ...</div><div class="line">          .build();</div><div class="line">    ...</div><div class="line">    idleFileChecker.scheduleWithFixedDelay(<span class="keyword">new</span> idleFileCheckerRunnable(),idleTimeout, checkIdleInterval, TimeUnit.MILLISECONDS);</div><div class="line">    ...</div><div class="line">    positionWriter.scheduleWithFixedDelay(<span class="keyword">new</span> PositionWriterRunnable(),writePosInitDelay, writePosInterval, TimeUnit.MILLISECONDS);</div><div class="line"></div><div class="line">    <span class="keyword">super</span>.start();</div><div class="line">    sourceCounter.start();</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>ReliableTaildirEventReader初始化；  </li>
+<li>idleFileChecker定时执行idleFileCheckerRunnable:找到idleTimeout时间内没有更新过的历史文件；</li>
+<li>positionWriter定时执行PositionWriterRunnable：existingInodes对象json格式化，写入文件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">ReliableTaildirEventReader:</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Status <span class="title">process</span><span class="params">()</span> </span>&#123;</div><div class="line">    Status status = Status.READY;</div><div class="line">    ...</div><div class="line">    existingInodes.clear();</div><div class="line">    existingInodes.addAll(reader.updateTailFiles());</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> inode : existingInodes) &#123;</div><div class="line">        TailFile tf = reader.getTailFiles().get(inode);</div><div class="line">        <span class="keyword">if</span> (tf.needTail()) &#123;</div><div class="line">          tailFileProcess(tf, <span class="keyword">true</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">    closeTailFiles();</div><div class="line">    TimeUnit.MILLISECONDS.sleep(retryInterval);</div><div class="line">    ...</div><div class="line">    <span class="keyword">return</span> status;</div><div class="line">&#125;</div><div class="line"></div><div class="line"> </div><div class="line">--&gt;ReliableTaildirEventReader.tailFileProcess</div><div class="line">--&gt;ReliableTaildirEventReader.readEvents</div><div class="line">--&gt;TailFile.readEvents</div><div class="line">--&gt;TailFile.readEvent</div><div class="line">--&gt;TailFile.readLine</div></pre></td></tr></table></figure>
+<ul>
+<li>existingInodes.addAll(reader.updateTailFiles())<br>这里调用reader.updateTailFiles方法遍历目录、遍历文件，找到匹配的有更新的文件，tailFiles缓存TailFile，返回inode list；<br>该过程找到文件后，通过openFile(f, headers, inode, tf.getPos())方法包装成TailFile对象或者更新已有TailFile对象的信息updatePos(tf.getPath(), inode, 0)；<br>历史文件是否更新根据lastUpdated记录时间判断；<br>文件目录遍历的是List<taildirmatcher> taildirCache，该对象在ReliableTaildirEventReader创建的时候加载的，</taildirmatcher></li>
+<li><p>tailFileProcess(TailFile tf, boolean backoffWithoutNL)<br>循环变量文件，按行批量读取日志；<br>TailFile内部有byte数组缓存数据；<br>主要的文件读取逻辑都在这一步里面，我能大概看懂，具体细节还要自己看代码</p>
+</li>
+<li><p>closeTailFiles()<br>从ReliableTaildirEventReader中找到idleInodes对应的TailFile执行关闭操作，这里的关闭操作会调用tailFileProcess，批量去读当前文件的行日志数据，然后关闭对应的RadomAccessFile</p>
+</li>
+</ul>
+<p>实现PollableSource接口：在process方法中刷新existingInodes，根据目录时间判断<br>定时更新 idleInodes：通过文件更新时间判断；<br>定时刷新position文件：找打existingInodes 对应的TailFile；    </p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/note.github.io/tags/flume-ng/" rel="tag"># flume-ng</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/note.github.io/2018/03/25/flume源码-组件/" rel="next" title="flume源码-组件">
+                <i class="fa fa-chevron-left"></i> flume源码-组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/note.github.io/2018/06/30/flume日志收集分层架构应用实践（转）/" rel="prev" title="flume日志收集分层架构应用实践（转）">
+                flume日志收集分层架构应用实践（转） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -353,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -453,6 +615,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#TaildirSource"><span class="nav-number">1.</span> <span class="nav-text">TaildirSource</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
