@@ -244,6 +244,26 @@ kafka:kafka_2.10-0.10.1.0(已安装好，kafka安装)
   </entry>
   
   <entry>
+    <title>my first post</title>
+    <link href="https://xiaofeng613n.github.io/2017/10/03/my-first-post2/"/>
+    <id>https://xiaofeng613n.github.io/2017/10/03/my-first-post2/</id>
+    <published>2017-10-03T07:31:18.000Z</published>
+    <updated>2017-10-03T09:40:43.401Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="java" scheme="https://xiaofeng613n.github.io/categories/java/"/>
+    
+    
+      <category term="aop" scheme="https://xiaofeng613n.github.io/tags/aop/"/>
+    
+      <category term="ioc" scheme="https://xiaofeng613n.github.io/tags/ioc/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
     <link href="https://xiaofeng613n.github.io/2017/10/03/hello-world/"/>
     <id>https://xiaofeng613n.github.io/2017/10/03/hello-world/</id>
