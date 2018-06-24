@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="flume-ng," />
+  <meta name="keywords" content="java, shenzheng" />
 
 
 
@@ -81,18 +81,17 @@
 
 
 
-<meta name="description" content="flume的启动是从Application.main开始的，这里先忽略flume配置文件的加载读取（假设已经读取配置），从最简单的启动方式来看一下flume的启动流程  Application.java 31行 application.handleConfigurationEvent(configurationProvider.getConfiguration());  AbstractConfi">
-<meta name="keywords" content="flume-ng">
+<meta name="description" content="每天进步一点点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flume源码-启动">
-<meta property="og:url" content="https://xiaofeng613n.github.io/2018/03/23/flume源码-启动/index.html">
+<meta property="og:title" content="峰&#39;s Harbor">
+<meta property="og:url" content="https://xiaofeng613n.github.io/2018/06/24/20180621fluem源码-http监控/index.html">
 <meta property="og:site_name" content="峰&#39;s Harbor">
-<meta property="og:description" content="flume的启动是从Application.main开始的，这里先忽略flume配置文件的加载读取（假设已经读取配置），从最简单的启动方式来看一下flume的启动流程  Application.java 31行 application.handleConfigurationEvent(configurationProvider.getConfiguration());  AbstractConfi">
+<meta property="og:description" content="每天进步一点点">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-25T10:21:01.260Z">
+<meta property="og:updated_time" content="2018-06-24T02:54:07.566Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flume源码-启动">
-<meta name="twitter:description" content="flume的启动是从Application.main开始的，这里先忽略flume配置文件的加载读取（假设已经读取配置），从最简单的启动方式来看一下flume的启动流程  Application.java 31行 application.handleConfigurationEvent(configurationProvider.getConfiguration());  AbstractConfi">
+<meta name="twitter:title" content="峰&#39;s Harbor">
+<meta name="twitter:description" content="每天进步一点点">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://xiaofeng613n.github.io/2018/03/23/flume源码-启动/"/>
+  <link rel="canonical" href="https://xiaofeng613n.github.io/2018/06/24/20180621fluem源码-http监控/"/>
 
 
 
 
 
-  <title>flume源码-启动 | 峰's Harbor</title>
+  <title> | 峰's Harbor</title>
   
 
 
@@ -309,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/03/23/flume源码-启动/">
+    <link itemprop="mainEntityOfPage" href="https://xiaofeng613n.github.io/note.github.io/2018/06/24/20180621fluem源码-http监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiaofeng">
@@ -326,7 +325,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">flume源码-启动</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -338,8 +337,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T21:21:40+08:00">
-                2018-03-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-24T10:54:07+08:00">
+                2018-06-24
               </time>
             
 
@@ -348,28 +347,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/note.github.io/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -398,24 +375,7 @@
       
 
       
-        <p>flume的启动是从Application.main开始的，这里先忽略flume配置文件的加载读取（假设已经读取配置），从最简单的启动方式来看一下flume的启动流程</p>
-<p>Application.java 31行<br>application.handleConfigurationEvent(configurationProvider.getConfiguration());</p>
-<p>AbstractConfigurationProvider：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> MaterializedConfiguration <span class="title">getConfiguration</span><span class="params">()</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    loadChannels(agentConf, channelComponentMap);</div><div class="line">    loadSources(agentConf, channelComponentMap, sourceRunnerMap);</div><div class="line">    loadSinks(agentConf, channelComponentMap, sinkRunnerMap);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>getConfiguration这个方法的主要功能是物化配置</p>
-<p>接下来分别分析下这三个加载方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadChannels</span><span class="params">(AgentConfiguration agentConf, Map&lt;String, ChannelComponent&gt; channelComponentMap)</span> <span class="keyword">throws</span> InstantiationException</span>&#123;</div><div class="line">    ...</div><div class="line">    Channel channel = getOrCreateChannel(...);</div><div class="line">    channelComponentMap.put(chName, <span class="keyword">new</span> ChannelComponent(channel));</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>channel生成后，使用了一个ChannelComponent对象来包装它<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadSources</span><span class="params">(AgentConfiguration agentConf, Map&lt;String, ChannelComponent&gt; channelComponentMap, Map&lt;String, SourceRunner&gt; sourceRunnerMap)</span> <span class="keyword">throws</span> InstantiationException </span>&#123;</div><div class="line">    ...</div><div class="line">    Source source = sourceFactory.create(...)</div><div class="line">    ChannelSelector selector = ChannelSelectorFactory.create(sourceChannels, selectorConfig);</div><div class="line">    ChannelProcessor channelProcessor = <span class="keyword">new</span> ChannelProcessor(selector);</div><div class="line">    source.setChannelProcessor(channelProcessor);</div><div class="line">    sourceRunnerMap.put(sourceName, SourceRunner.forSource(source));</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>SourceRunner结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">SourceRunner    </div><div class="line">    Source</div><div class="line">        ChannelProcessor</div><div class="line">            ChannelSelector</div><div class="line">                channels    </div><div class="line">        InterceptorChain</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadSinks</span><span class="params">(AgentConfiguration agentConf, Map&lt;String, ChannelComponent&gt; channelComponentMap, Map&lt;String, SinkRunner&gt; sinkRunnerMap)</span> <span class="keyword">throws</span> InstantiationException </span>&#123;</div><div class="line">    ...</div><div class="line">    Sink sink = sinkFactory.create(...)</div><div class="line">    sink.setChannel(channelComponent.channel);</div><div class="line">    sinks.put(sinkName, sink);</div><div class="line">    loadSinkGroups(agentConf, sinks, sinkRunnerMap);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadSinkGroups</span><span class="params">(AgentConfiguration agentConf, Map&lt;String, Sink&gt; sinks, Map&lt;String, SinkRunner&gt; sinkRunnerMap)</span> <span class="keyword">throws</span> InstantiationException </span>&#123;</div><div class="line">    ...</div><div class="line">    SinkGroup group = <span class="keyword">new</span> SinkGroup(groupSinks);</div><div class="line">    sinkRunnerMap.put(comp.getComponentName(),<span class="keyword">new</span> SinkRunner(group.getProcessor()));</div><div class="line">    ...</div><div class="line">    </div><div class="line">    ...</div><div class="line">    SinkProcessor pr = <span class="keyword">new</span> DefaultSinkProcessor();</div><div class="line">    List&lt;Sink&gt; sinkMap = <span class="keyword">new</span> ArrayList&lt;Sink&gt;();</div><div class="line">    sinkMap.add(entry.getValue());</div><div class="line">    pr.setSinks(sinkMap);</div><div class="line">    Configurables.configure(pr, <span class="keyword">new</span> Context());</div><div class="line">    sinkRunnerMap.put(entry.getKey(), <span class="keyword">new</span> SinkRunner(pr));</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>SinkRunner结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SinkGroup</div><div class="line">    sinks</div><div class="line">    SinkProcessor</div><div class="line">SinkRunner</div><div class="line">    SinkProcessor</div><div class="line">        SinkSelector</div><div class="line">	        sinks</div></pre></td></tr></table></figure>
-<p>SinkRunner可能对应一个sink也可能对应一个sinkgroup。因为如果配置文件中有sinkgroup则这个sinkgroup对应的sink会组成一个group然后封装为一个sinkRunner，然后不在sinkgroup中的sink会自己成为一个sinkRunner</p>
-<p>物化配置完成后，启动容器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">handleConfigurationEvent</span><span class="params">(MaterializedConfiguration conf)</span> </span>&#123;</div><div class="line">    stopAllComponents();</div><div class="line">    startAllComponents(conf);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startAllComponents</span><span class="params">(MaterializedConfiguration materializedConfiguration)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">for</span> (Entry&lt;String, Channel&gt; entry : materializedConfiguration.getChannels().entrySet()) &#123;</div><div class="line">        ...</div><div class="line">        supervisor.supervise(entry.getValue(), <span class="keyword">new</span> SupervisorPolicy.AlwaysRestartPolicy(), LifecycleState.START);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">     <span class="comment">/*</span></div><div class="line"><span class="comment">     * Wait for all channels to start.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    ...</div><div class="line">    <span class="keyword">for</span> (Entry&lt;String, SinkRunner&gt; entry : materializedConfiguration.getSinkRunners().entrySet()) &#123;</div><div class="line">        ...</div><div class="line">        supervisor.supervise(entry.getValue(), <span class="keyword">new</span> SupervisorPolicy.AlwaysRestartPolicy(), LifecycleState.START);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (Entry&lt;String, SourceRunner&gt; entry : materializedConfiguration.getSourceRunners().entrySet()) &#123;</div><div class="line">        ...</div><div class="line">        supervisor.supervise(entry.getValue(), <span class="keyword">new</span> SupervisorPolicy.AlwaysRestartPolicy(), LifecycleState.START);</div><div class="line">    ...</div><div class="line">    &#125;</div><div class="line">    ...   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>stopAllComponents()方法会依次stop各个组件的运行，顺序是：source、sink、channel。之所以有顺序是因为：一、source是不停的读数据放入channel的；二、sink是不停的从channel拿数据的，channel两头都在使用应该最后停止，停止向channel发送数据后sink停止才不会丢数据。stop是通过supervisor.unsupervise方法来完成的。<br>startAllComponents(conf)是启动各个组件的，顺序正好和stopAllComponents()停止顺序相反<br>在startAllComponents中可以看到3个主要的循环都执行supervisor.supervise(…)<br>这是在向LifecycleSupervisor中注册Supervisee（LifecycleAware ）<br>启动channel组件后需要等待一定时间，是为了让所有channel全部启动</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">supervise</span><span class="params">(LifecycleAware lifecycleAware, SupervisorPolicy policy, LifecycleState desiredState)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    Supervisoree process = <span class="keyword">new</span> Supervisoree();</div><div class="line">    process.status = <span class="keyword">new</span> Status();</div><div class="line">    process.policy = policy;</div><div class="line">    process.status.desiredState = desiredState;</div><div class="line">    process.status.error = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    MonitorRunnable monitorRunnable = <span class="keyword">new</span> MonitorRunnable();</div><div class="line">    monitorRunnable.lifecycleAware = lifecycleAware;</div><div class="line">    monitorRunnable.supervisoree = process;</div><div class="line">    monitorRunnable.monitorService = monitorService;</div><div class="line"></div><div class="line">    supervisedProcesses.put(lifecycleAware, process);</div><div class="line"></div><div class="line">    ScheduledFuture&lt;?&gt; future = monitorService.scheduleWithFixedDelay(monitorRunnable, <span class="number">0</span>, <span class="number">3</span>, TimeUnit.SECONDS);</div><div class="line">    monitorFutures.put(lifecycleAware, future);</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>monitorService定时执行MonitorRunnable，这个Runnable实现主要的逻辑就是，如果lifecycleAware的状态（supervisoree.status.desiredState）不是期望的状态就执行lifecycleAware的start或者stop方法</p>
-<p>（MonitorRunnable保存的lifecycleAware就是前面加载的Channel，SourceRunner,SinkRunner）</p>
-
+        
       
     </div>
     
@@ -430,12 +390,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/note.github.io/tags/flume-ng/" rel="tag"># flume-ng</a>
-          
-        </div>
-      
 
       
       
@@ -445,8 +399,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/note.github.io/2018/01/14/HBase配置/" rel="next" title="HBase配置">
-                <i class="fa fa-chevron-left"></i> HBase配置
+              <a href="/note.github.io/2018/05/17/20180325flume源码-组件FileChannel/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -455,8 +409,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/note.github.io/2018/03/25/flume源码-组件/" rel="prev" title="flume源码-组件">
-                flume源码-组件 <i class="fa fa-chevron-right"></i>
+              <a href="/note.github.io/2018/06/30/Flume日志收集分层架构（转）/" rel="prev" title="fFlume日志收集分层架构应用实践（转）">
+                fFlume日志收集分层架构应用实践（转） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -527,7 +481,7 @@
               
                 <a href="/note.github.io/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
