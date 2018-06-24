@@ -6,7 +6,7 @@
   <link href="/note.github.io/atom.xml" rel="self"/>
   
   <link href="https://xiaofeng613n.github.io/"/>
-  <updated>2018-05-20T08:51:53.552Z</updated>
+  <updated>2018-05-17T13:13:15.295Z</updated>
   <id>https://xiaofeng613n.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>fFlume日志收集分层架构应用实践（转）</title>
+    <link href="https://xiaofeng613n.github.io/2018/06/30/Flume%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%EF%BC%88%E8%BD%AC%EF%BC%89/"/>
+    <id>https://xiaofeng613n.github.io/2018/06/30/Flume日志收集分层架构（转）/</id>
+    <published>2018-06-30T05:23:34.000Z</published>
+    <updated>2018-05-17T13:13:15.295Z</updated>
+    
+    <content type="html"><![CDATA[<p>原文链接：<a href="http://shiyanjun.cn/archives/1497.html" target="_blank" rel="external">Flume日志收集分层架构应用实践</a></p><h5 id="为什么要对Flume日志收集系统进行分层设计"><a href="#为什么要对Flume日志收集系统进行分层设计" class="headerlink" title="为什么要对Flume日志收集系统进行分层设计"></a>为什么要对Flume日志收集系统进行分层设计</h5><p>基于Flume设计实现分层日志收集系统，到底有什么好处呢？我们可以先看一下，如果不分层，会带来哪些问题：</p><ul><li>如果需要通过Kafka去缓冲上游基于Flume收集而构建的日志流，对于数据平台内部服务器产生的数据还好，但是如果日志数据是跨业务组，甚至是跨部门，那么就需要将Kafka相关信息暴露给外部，这样对Kafka的访问便不是数据平台内部可控的</li><li>如果是外部日志进入平台内部HDFS，这样如果需要对Hadoop系统进行升级或例行维护，这种直连的方式会影响到上游部署Flume的日志流的始端日志收集服务</li><li>如果数据平台内部某些系统，如Kafka集群、HDFS集群所在节点的机房位置变更，数据迁移，会使得依赖日志数据的外部系统受到不同程度的影响，外部系统需要相关开发或运维人员参与进来</li><li>由于收集日志的数据源端可能是外部一些服务器（多个单个的节点），一些业务集群（相互协作的多节点组），也可能是内部一些提供收集服务的服务节点，这些所有的服务器上部署的Flume Agent都处于一层中，比较难于分组管理<br>由于所有数据源端Flume Agent收集的日志进入数据平台的时候，没有一个统一的类似总线的组件，很难因为某些业务扩展而独立地去升级数据平台内部的接收层服务节点，可能为了升级数据平台内部某个系统或服务而导致影响了其他的接收层服务节点</li></ul><p><img src="http://shiyanjuncn.b0.upaiyun.com/wp-content/uploads/2016/02/flume-with-layered-architecture.png" alt="image"><br>上图中，Flume日志收集系统采用两层架构设计：第一层（L1）是日志收集层，第二层（L2）是数据平台缓冲层（汇聚层）。通过这种方式，使得日志收集系统有如下特点：</p><ul><li>针对数据平台外部的业务系统，根据需要分析的数据业务类型进行分组，属于同一种类型的业务日志，在数据平台前端增加了一个Flume汇聚层节点组，该组节点只影响到它对应的L1层的业务数据</li><li>如果Hadoop集群、Kafka需要停机维护或升级，对外部L1层Flume Agent没有影响，只需要在L2层做好数据的接收与缓冲即可，待维护或升级结束，继续将L2层缓存的数据导入到数据存储系统</li><li>如果外部某个类型的业务日志数据节点需要扩容，直接在L1层将数据流指向数据平台内部与之相对应的L2层Flume Agent节点组即可，能够对外部因业务变化发生的新增日志收集需求，进行快速地响应和部署</li><li>对于数据平台内部，因为收集日志的节点非常可控，可以直接通过L1层Flume Agent使日志数据流入HDFS或Kafka，当然为了架构统一和管理，最好也是通过L2层Flume Agent节点组来汇聚/缓冲L1层Flume Agent收集的日志数据</li></ul><p>通过上面分析可见，分层无非是为了使的日志数据源节点的Flume Agent服务与数据平台的存储系统（Kafka/HDFS）进行解耦，同时能够更好地对同类型业务多节点的日志流进行一个聚合操作，并分离开独立管理。另外，可以根据实际业务需要，适当增加Flume系统分层，满足日志流数据的汇聚需要。</p>]]></content>
+    
+    <summary type="html">
+    
+      原文链接：Flume日志收集分层架构应用实践
+
+为什么要对Flume日志收集系统进行分层设计
+基于Flume设计实现分层日志收集系统，到底有什么好处呢？我们可以先看一下，如果不分层，会带来哪些问题：
+
+ * 如果需要通过Kafka去缓冲上游基于Flume收集而构建的日志流，对于数据平台内部服务器产生的数据还好，但是如果日志数据是跨业务组，甚至是跨部门，那么就需要将Kafka相关信息暴露给外部，这样对Kafka的访问便不是数据平台内部可控的
+ * 如果是外部日志进入平台内部HDFS，这样如果需要对Hadoop系统进行升级或例行维护，这种直连的方式会影响到上游部署Flume的日志流的始端日志收集服
+    
+    </summary>
+    
+      <category term="java" scheme="https://xiaofeng613n.github.io/categories/java/"/>
+    
+    
+      <category term="flume-ng" scheme="https://xiaofeng613n.github.io/tags/flume-ng/"/>
+    
+  </entry>
   
   <entry>
     <title>flume总结</title>
@@ -43,34 +71,6 @@
 
  * Proposal of Transactional Multiplex (fan out) Sink 
  * Multiple Sinks can co
-    
-    </summary>
-    
-      <category term="java" scheme="https://xiaofeng613n.github.io/categories/java/"/>
-    
-    
-      <category term="flume-ng" scheme="https://xiaofeng613n.github.io/tags/flume-ng/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>fFlume日志收集分层架构应用实践（转）</title>
-    <link href="https://xiaofeng613n.github.io/2018/06/30/Flume%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%EF%BC%88%E8%BD%AC%EF%BC%89/"/>
-    <id>https://xiaofeng613n.github.io/2018/06/30/Flume日志收集分层架构（转）/</id>
-    <published>2018-06-30T05:23:34.000Z</published>
-    <updated>2018-05-17T13:13:15.295Z</updated>
-    
-    <content type="html"><![CDATA[<p>原文链接：<a href="http://shiyanjun.cn/archives/1497.html" target="_blank" rel="external">Flume日志收集分层架构应用实践</a></p><h5 id="为什么要对Flume日志收集系统进行分层设计"><a href="#为什么要对Flume日志收集系统进行分层设计" class="headerlink" title="为什么要对Flume日志收集系统进行分层设计"></a>为什么要对Flume日志收集系统进行分层设计</h5><p>基于Flume设计实现分层日志收集系统，到底有什么好处呢？我们可以先看一下，如果不分层，会带来哪些问题：</p><ul><li>如果需要通过Kafka去缓冲上游基于Flume收集而构建的日志流，对于数据平台内部服务器产生的数据还好，但是如果日志数据是跨业务组，甚至是跨部门，那么就需要将Kafka相关信息暴露给外部，这样对Kafka的访问便不是数据平台内部可控的</li><li>如果是外部日志进入平台内部HDFS，这样如果需要对Hadoop系统进行升级或例行维护，这种直连的方式会影响到上游部署Flume的日志流的始端日志收集服务</li><li>如果数据平台内部某些系统，如Kafka集群、HDFS集群所在节点的机房位置变更，数据迁移，会使得依赖日志数据的外部系统受到不同程度的影响，外部系统需要相关开发或运维人员参与进来</li><li>由于收集日志的数据源端可能是外部一些服务器（多个单个的节点），一些业务集群（相互协作的多节点组），也可能是内部一些提供收集服务的服务节点，这些所有的服务器上部署的Flume Agent都处于一层中，比较难于分组管理<br>由于所有数据源端Flume Agent收集的日志进入数据平台的时候，没有一个统一的类似总线的组件，很难因为某些业务扩展而独立地去升级数据平台内部的接收层服务节点，可能为了升级数据平台内部某个系统或服务而导致影响了其他的接收层服务节点</li></ul><p><img src="http://shiyanjuncn.b0.upaiyun.com/wp-content/uploads/2016/02/flume-with-layered-architecture.png" alt="image"><br>上图中，Flume日志收集系统采用两层架构设计：第一层（L1）是日志收集层，第二层（L2）是数据平台缓冲层（汇聚层）。通过这种方式，使得日志收集系统有如下特点：</p><ul><li>针对数据平台外部的业务系统，根据需要分析的数据业务类型进行分组，属于同一种类型的业务日志，在数据平台前端增加了一个Flume汇聚层节点组，该组节点只影响到它对应的L1层的业务数据</li><li>如果Hadoop集群、Kafka需要停机维护或升级，对外部L1层Flume Agent没有影响，只需要在L2层做好数据的接收与缓冲即可，待维护或升级结束，继续将L2层缓存的数据导入到数据存储系统</li><li>如果外部某个类型的业务日志数据节点需要扩容，直接在L1层将数据流指向数据平台内部与之相对应的L2层Flume Agent节点组即可，能够对外部因业务变化发生的新增日志收集需求，进行快速地响应和部署</li><li>对于数据平台内部，因为收集日志的节点非常可控，可以直接通过L1层Flume Agent使日志数据流入HDFS或Kafka，当然为了架构统一和管理，最好也是通过L2层Flume Agent节点组来汇聚/缓冲L1层Flume Agent收集的日志数据</li></ul><p>通过上面分析可见，分层无非是为了使的日志数据源节点的Flume Agent服务与数据平台的存储系统（Kafka/HDFS）进行解耦，同时能够更好地对同类型业务多节点的日志流进行一个聚合操作，并分离开独立管理。另外，可以根据实际业务需要，适当增加Flume系统分层，满足日志流数据的汇聚需要。</p>]]></content>
-    
-    <summary type="html">
-    
-      原文链接：Flume日志收集分层架构应用实践
-
-为什么要对Flume日志收集系统进行分层设计
-基于Flume设计实现分层日志收集系统，到底有什么好处呢？我们可以先看一下，如果不分层，会带来哪些问题：
-
- * 如果需要通过Kafka去缓冲上游基于Flume收集而构建的日志流，对于数据平台内部服务器产生的数据还好，但是如果日志数据是跨业务组，甚至是跨部门，那么就需要将Kafka相关信息暴露给外部，这样对Kafka的访问便不是数据平台内部可控的
- * 如果是外部日志进入平台内部HDFS，这样如果需要对Hadoop系统进行升级或例行维护，这种直连的方式会影响到上游部署Flume的日志流的始端日志收集服
     
     </summary>
     
